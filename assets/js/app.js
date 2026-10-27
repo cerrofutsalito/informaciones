@@ -99,11 +99,23 @@
   // Actualizar el dock inferior
   function updateStickyDock() {
     if (state.vista === 'detalle' && state.catSeleccionada) {
+      document.body.classList.add('view-detail');
       stickyCta.href = getWhatsappUrl(state.catSeleccionada);
       if (stickyCtaText) stickyCtaText.textContent = 'Inscribirme';
+      if (header) {
+        header.classList.add('is-back-target');
+        header.setAttribute('aria-label', 'Volver a la lista de categorías');
+        header.title = 'Toca aquí para volver a la lista';
+      }
     } else {
+      document.body.classList.remove('view-detail');
       stickyCta.href = getWhatsappUrl(null);
       if (stickyCtaText) stickyCtaText.textContent = 'Consultar WhatsApp';
+      if (header) {
+        header.classList.remove('is-back-target');
+        header.removeAttribute('aria-label');
+        header.title = 'Cerro Porteño Futsal - Base y Formativas';
+      }
     }
   }
 
@@ -154,6 +166,55 @@
         </div>
         <div class="categories-list">
           ${cardsHtml}
+        </div>
+      </section>
+
+      <!-- Sección de Preguntas Frecuentes / Beneficios -->
+      <section class="faq-section">
+        <div class="section-header">
+          <span class="section-title">Preguntas Frecuentes</span>
+          <span class="section-hint">Dudas habituales</span>
+        </div>
+        <div class="faq-list">
+          <details class="glass-card faq-item">
+            <summary class="faq-summary">
+              <span>¿Se puede hacer una clase de prueba?</span>
+              <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <div class="faq-content">
+              <p>¡Sí! Se puede coordinar una primera práctica de evaluación sin compromiso para que el alumno/a conozca las instalaciones, a los profesores y a sus compañeros de grupo.</p>
+            </div>
+          </details>
+
+          <details class="glass-card faq-item">
+            <summary class="faq-summary">
+              <span>¿Qué indumentaria o calzado se necesita?</span>
+              <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <div class="faq-content">
+              <p>Para comenzar se requiere ropa deportiva cómoda y calzado deportivo de suela lisa (championes para futsal/pista). La indumentaria oficial se gestiona tras confirmar la inscripción.</p>
+            </div>
+          </details>
+
+          <details class="glass-card faq-item">
+            <summary class="faq-summary">
+              <span>¿Las formativas y base son mixtas?</span>
+              <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <div class="faq-content">
+              <p>Sí, en las etapas de base y formativas promovemos un entorno formativo mixto e inclusivo, enfocado en el desarrollo psicomotriz, valores deportivos y técnica individual.</p>
+            </div>
+          </details>
+
+          <details class="glass-card faq-item">
+            <summary class="faq-summary">
+              <span>¿Quiénes dictan los entrenamientos?</span>
+              <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+            </summary>
+            <div class="faq-content">
+              <p>Las clases son dirigidas por un cuerpo técnico especializado en fútbol de salón formativo, con metodología del Club Cerro Porteño centrada en el crecimiento pedagógico y deportivo.</p>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -354,8 +415,21 @@
     if (btnVolver) btnVolver.addEventListener('click', volverALista);
   }
 
-  // Clic en encabezado para regresar a la lista si está en detalle
-  if (header) header.addEventListener('click', volverALista);
+  // Eventos y accesibilidad en el encabezado
+  if (header) {
+    header.addEventListener('click', () => {
+      if (state.vista === 'detalle') {
+        volverALista();
+      }
+    });
+
+    header.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && state.vista === 'detalle') {
+        e.preventDefault();
+        volverALista();
+      }
+    });
+  }
 
   // Inicialización
   render();
