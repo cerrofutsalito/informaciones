@@ -1,5 +1,5 @@
 /**
- * Cerro Porteño Futsal - Base y Formativas 2026
+ * Cerro Porteño Futsal - Base y Formativas
  */
 
 (function () {
@@ -50,8 +50,8 @@
       diasCorto: 'Mar y Jue',
       diasCompleto: 'Martes y Jueves',
       horario: '18:30 a 19:45 hs',
-      lugar: 'Seccional 19',
-      direccion: '18 proyectadas entre Chile y Alberdi, Asunción',
+      lugar: 'Seccional 19 (Barrio Obrero)',
+      direccion: '18 Proyectadas entre Chile y Alberdi, Barrio Obrero - Asunción',
       mapaUrl: 'https://www.google.com/maps/search/?api=1&query=Seccional+19+Asuncion'
     },
     {
@@ -61,8 +61,8 @@
       diasCorto: 'Mar y Jue',
       diasCompleto: 'Martes y Jueves',
       horario: '19:45 a 21:00 hs',
-      lugar: 'Seccional 19',
-      direccion: '18 proyectadas entre Chile y Alberdi, Asunción',
+      lugar: 'Seccional 19 (Barrio Obrero)',
+      direccion: '18 Proyectadas entre Chile y Alberdi, Barrio Obrero - Asunción',
       mapaUrl: 'https://www.google.com/maps/search/?api=1&query=Seccional+19+Asuncion'
     }
   ];
@@ -81,6 +81,24 @@
   const stickyCtaText = document.getElementById('sticky-cta-text');
   const header = document.getElementById('app-header');
 
+  // Año actual dinámico
+  const CURRENT_YEAR = new Date().getFullYear();
+
+  function updateDynamicYears() {
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', `Escuela y Formativas de Futsal del Club Cerro Porteño (Cerro Futsalito) en Asunción y Barrio Obrero ${CURRENT_YEAR}. Horarios de entrenamiento Sub 4 a Sub 17, sedes en ACJ y Seccional 19 e inscripciones abiertas para niños y jóvenes.`);
+    }
+    const statusPill = document.querySelector('.status-pill');
+    if (statusPill) {
+      statusPill.setAttribute('title', `Temporada ${CURRENT_YEAR} activa`);
+    }
+    const yearElements = document.querySelectorAll('.current-year');
+    yearElements.forEach(el => {
+      el.textContent = CURRENT_YEAR;
+    });
+  }
+
   // Íconos reutilizables
   const ICON_CLOCK = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
   const ICON_PIN = '<svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>';
@@ -91,7 +109,7 @@
     if (cat) {
       msg = `Hola Tami, me gustaría inscribirme en la categoría ${cat.titulo} (${cat.diasCompleto}, ${cat.horario} en ${cat.lugar}). ¿Me podrías indicar los requisitos y detalles?`;
     } else {
-      msg = 'Hola Tami, me gustaría recibir información sobre las inscripciones para las Formativas de Cerro Porteño Futsal 2026.';
+      msg = `Hola Tami, me gustaría recibir información sobre las inscripciones para las Formativas de Cerro Porteño Futsal ${CURRENT_YEAR}.`;
     }
     return `https://wa.me/${TELEFONO_WHATSAPP}?text=${encodeURIComponent(msg)}`;
   }
@@ -155,13 +173,12 @@
     return `
       <div class="filter-tabs">
         <button type="button" class="filter-btn ${state.filtro === 'todos' ? 'active-blue' : ''}" data-filter="todos">Todas</button>
-        <button type="button" class="filter-btn ${state.filtro === 'lunes_miercoles' ? 'active-blue' : ''}" data-filter="lunes_miercoles">Lun y Mié</button>
-        <button type="button" class="filter-btn ${state.filtro === 'martes_jueves' ? 'active-red' : ''}" data-filter="martes_jueves">Mar y Jue</button>
+        <button type="button" class="filter-btn ${state.filtro === 'lunes_miercoles' ? 'active-blue' : ''}" data-filter="lunes_miercoles">Lun y Mié (ACJ)</button>
+        <button type="button" class="filter-btn ${state.filtro === 'martes_jueves' ? 'active-red' : ''}" data-filter="martes_jueves">Mar y Jue (Secc. 19)</button>
       </div>
 
       <section>
         <div class="section-header">
-          <span class="section-title">Selecciona tu Categoría</span>
           <span class="section-hint">Toca para ver detalles</span>
         </div>
         <div class="categories-list">
@@ -173,18 +190,8 @@
       <section class="faq-section">
         <div class="section-header">
           <span class="section-title">Preguntas Frecuentes</span>
-          <span class="section-hint">Dudas habituales</span>
         </div>
         <div class="faq-list">
-          <details class="glass-card faq-item">
-            <summary class="faq-summary">
-              <span>¿Se puede hacer una clase de prueba?</span>
-              <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-            </summary>
-            <div class="faq-content">
-              <p>¡Sí! Se puede coordinar una primera práctica de evaluación sin compromiso para que el alumno/a conozca las instalaciones, a los profesores y a sus compañeros de grupo.</p>
-            </div>
-          </details>
 
           <details class="glass-card faq-item">
             <summary class="faq-summary">
@@ -212,13 +219,13 @@
               <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
             </summary>
             <div class="faq-content">
-              <p>Las clases son dirigidas por un cuerpo técnico especializado en fútbol de salón formativo, con metodología del Club Cerro Porteño centrada en el crecimiento pedagógico y deportivo.</p>
+              <p>Las clases son dirigidas por un cuerpo técnico especializado en FUTSAL formativo, con metodología del Club Cerro Porteño centrada en el crecimiento pedagógico y deportivo.</p>
             </div>
           </details>
         </div>
       </section>
 
-      <p class="slogan-text">"Formamos a los Futuros Dueños del Futsal"</p>
+      <p class="slogan-text">"Herederos hoy, Dueños del Futsal mañana"</p>
     `;
   }
 
@@ -308,10 +315,14 @@
   }
 
   // Abrir detalle con View Transition limpia (solo la tarjeta activa se agranda)
-  function abrirDetalle(cat, cardEl) {
+  function abrirDetalle(cat, cardEl, pushHistory = true) {
     state.scrollLista = window.scrollY;
 
-    if (!document.startViewTransition) {
+    if (pushHistory && window.history && window.history.pushState) {
+      window.history.pushState({ vista: 'detalle', catId: cat.id }, '', `#${cat.id}`);
+    }
+
+    if (!document.startViewTransition || !cardEl) {
       state.vista = 'detalle';
       state.catSeleccionada = cat;
       render();
@@ -337,8 +348,15 @@
   }
 
   // Volver a la lista con animación inversa (la tarjeta se contrae a su posición)
-  function volverALista() {
+  function volverALista(fromPopState = false) {
     if (state.vista === 'lista') return;
+
+    // Si el usuario tocó el botón en pantalla y existe historial con hash, usar history.back()
+    if (!fromPopState && window.location.hash && window.history && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
     const catId = state.catSeleccionada ? state.catSeleccionada.id : null;
 
     if (!document.startViewTransition) {
@@ -412,25 +430,58 @@
   // Eventos de la vista de detalle
   function bindDetailEvents() {
     const btnVolver = document.getElementById('btn-volver');
-    if (btnVolver) btnVolver.addEventListener('click', volverALista);
+    if (btnVolver) btnVolver.addEventListener('click', () => volverALista(false));
   }
+
+  // Navegación con el botón "Atrás" del navegador/celular
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.vista === 'detalle' && e.state.catId) {
+      const cat = CATEGORIAS.find(c => c.id === e.state.catId);
+      if (cat) {
+        const cardEl = document.querySelector(`[data-cat-id="${cat.id}"]`);
+        abrirDetalle(cat, cardEl, false);
+        return;
+      }
+    }
+    if (state.vista === 'detalle') {
+      volverALista(true);
+    }
+  });
 
   // Eventos y accesibilidad en el encabezado
   if (header) {
-    header.addEventListener('click', () => {
+    header.addEventListener('click', (e) => {
+      // Evitar que al tocar el enlace de Instagram se cierre la vista de detalle
+      if (e.target.closest('a')) return;
       if (state.vista === 'detalle') {
-        volverALista();
+        volverALista(false);
       }
     });
 
     header.addEventListener('keydown', (e) => {
+      if (e.target.closest('a')) return;
       if ((e.key === 'Enter' || e.key === ' ') && state.vista === 'detalle') {
         e.preventDefault();
-        volverALista();
+        volverALista(false);
       }
     });
   }
 
   // Inicialización
+  updateDynamicYears();
+
+  // Si la URL inicial trae un hash de categoría válida, restaurar o limpiar
+  if (window.location.hash) {
+    const initialId = window.location.hash.replace('#', '');
+    const initialCat = CATEGORIAS.find(c => c.id === initialId);
+    if (initialCat) {
+      // Primero reemplazamos el estado base para que Atrás lleve a la lista
+      window.history.replaceState({ vista: 'lista' }, '', window.location.pathname);
+      window.history.pushState({ vista: 'detalle', catId: initialCat.id }, '', `#${initialCat.id}`);
+      state.vista = 'detalle';
+      state.catSeleccionada = initialCat;
+    }
+  }
+
   render();
 })();
